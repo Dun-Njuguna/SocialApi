@@ -6,7 +6,7 @@ const app = express();
 const FBAuth = require('./util/fbAuth');
 
 const {getAllScreams, postOneScream} = require('./handlers/screams');
-const{signUp, login, uploadImage} = require('./handlers/users');
+const{signUp, login, uploadImage, addUserDetails} = require('./handlers/users');
 
 // scream routes
 app.get('/screams', getAllScreams);
@@ -16,5 +16,7 @@ app.post('/scream', FBAuth, postOneScream);
 app.post('/signup', signUp)
 app.post(`/login`, login)
 app.post('/user/image', FBAuth, uploadImage)
+app.post('/user', FBAuth, addUserDetails);
+
 
 exports.api = functions.https.onRequest(app); 

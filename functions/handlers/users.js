@@ -80,6 +80,10 @@ exports.login = (req,res) => {
  
 }
 
+exports.addUserDetails = (req,res) => {
+    
+}
+
 exports.uploadImage = (req,res) => {
     const BusBoy = require('busboy')
     const path = require('path')
@@ -91,6 +95,11 @@ exports.uploadImage = (req,res) => {
     const busboy = new BusBoy({headers: req.headers});
 
     busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
+
+        if(mimetype !=='image/jpeg' && mimetype !== 'image/png' ){
+            return res.status(400).json({error: 'Wrong file type'})
+        }
+
         const imageExtension = filename.split('.')[filename.split('.').length - 1];
         imageFileName = `${Math.round(Math.random()*1000000000 )}.${imageExtension}`;
         const filepath = path.join(os.tmpdir(), imageFileName);
